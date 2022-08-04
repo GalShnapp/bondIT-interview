@@ -18,6 +18,12 @@ async def get_flight(flight_id):
     return flight
 
 
+def is_successful_flight(flight:Flight) -> bool:
+    flight_count = get_todays_flight_count()
+    minutes = ((flight.departure_time - flight.arrival_time).total_seconds()/60)
+    return minutes > 180 and flight_count < 20
+
+
 @app.put("/flights/{flight_id}", response_model=Flight)
 async def upsert_flight(flight_id: str, flight: FlightCreate):
     stored_flight_model = _get_flight(flight_id)
@@ -31,10 +37,6 @@ async def upsert_flight(flight_id: str, flight: FlightCreate):
             departure_time=flight.departure_time
         )
 
-    c = get_todays_flight_count()
-    minutes = ((updated_flight.departure_time - updated_flight.arrival_time).total_seconds()/60)
-    success = minutes > 180 and c < 20
-
-    updated_flight = updated_flight.copy(update={'success': success})
+    updated_flight = updated_flight.copy(update={'success': is_successful_flight(updated_flight)})
     _upsert_flight(updated_flight)
     return updated_flight
