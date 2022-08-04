@@ -32,7 +32,7 @@ async def upsert_flight(flight_id: str, flight: FlightCreate):
         )
 
     c = get_todays_flight_count()
-    minutes = ((flight.departure_time - flight.arrival_time).total_seconds()/60)
+    minutes = ((updated_flight.departure_time - updated_flight.arrival_time).total_seconds()/60)
     success = minutes > 180 and c < 20
 
     updated_flight = updated_flight.copy(update={'success': success})
