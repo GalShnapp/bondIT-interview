@@ -13,7 +13,6 @@ def csv_date_to_dateime(csv_date: str):
     return datetime.strptime(csv_date.strip(), "%H:%M")
 
 def csv_row_to_flight(csv_row: List):
-    print(f'csv_row[3]: {csv_row[3]}')
     return Flight( 
                 id=csv_row[0], 
                 arrival_time=csv_date_to_dateime(csv_row[1]), 
