@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
 
-with open('flight.csv') as csvfile:
+with open('flight_clean_copy.csv') as csvfile:
     spamreader = csv.reader(csvfile, quotechar='|')
     h = next(spamreader, None)
     sec_count = 0
