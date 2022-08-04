@@ -2,7 +2,6 @@ import csv
 from datetime import datetime
 from contextlib import contextmanager
 from typing import List, Union
-import pandas as pd
 from .schema import Flight
 
 #################################################################
