@@ -31,13 +31,13 @@ Alternatively, you may use the following formats to send requests to the api:
 ##### upsert
 ```sh
 JohnDoe@Host:~/bondIT-interview $ curl -X 'PUT' \
-  'http://127.0.0.1:8000/flights/G884' \
+  'http://127.0.0.1:8000/flights/G773' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "id": "G887",
-  "arrival_time": "12:08",
-  "departure_time": "23:08"
+  "id": "G773",
+  "arrival_time": "2022-08-05T04:25:07.712Z",
+  "departure_time": "2022-08-05T09:30:07.712Z"
 }'
 ```
 
