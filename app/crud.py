@@ -32,9 +32,11 @@ def _get_flight(flight_id: str) -> Union[Flight, None]:
     return next(filter(lambda flight: flight.id == flight_id, get_all_flights()), None)
 
 def _upsert_flight(updated_flight: Flight):
+    print(updated_flight)
     flights = get_all_flights()
+    print(flights[0])
     update_flag = False
-    n = []
+    n: List[Flight] = []
     for flight in flights:
         if flight.id == updated_flight.id:
             n.append(updated_flight)
@@ -44,7 +46,8 @@ def _upsert_flight(updated_flight: Flight):
 
     if not update_flag: # we need to insert
         n.append(updated_flight)
-    
+
+    n.sort(key=lambda flight: flight.arrival_time.replace(tzinfo=None))
     write_flight_list(n)
 
 def get_todays_flight_count():
