@@ -1,11 +1,12 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
+from .csv_utils import DATA_FILE_DATE_FORMAT, csv_date_to_dateime
 
 
 class FlightBase(BaseModel):
-    id: str
-    arrival_time: datetime
-    departure_time: datetime
+    arrival_time: Optional[datetime]
+    departure_time: Optional[datetime]
 
 
 class FlightCreate(FlightBase):
@@ -13,4 +14,7 @@ class FlightCreate(FlightBase):
 
 
 class Flight(FlightBase):
+    arrival_time: datetime
+    departure_time: datetime
+    id: str
     success: bool = False

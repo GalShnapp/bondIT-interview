@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # DB
-flight.csv
+*flight.csv*

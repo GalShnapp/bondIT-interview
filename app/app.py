@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from typing import Union
 from .schema import Flight, FlightCreate
 from .crud import _get_flight, _upsert_flight, get_todays_flight_count
 
@@ -20,7 +21,7 @@ async def get_flight(flight_id):
 
 def is_successful_flight(flight:Flight) -> bool:
     flight_count = get_todays_flight_count()
-    minutes = ((flight.departure_time - flight.arrival_time).total_seconds()/60)
+    minutes = ((flight.departure_time.replace(tzinfo=None) - flight.arrival_time.replace(tzinfo=None)).total_seconds()/60)
     return minutes > 180 and flight_count < 20
 
 
@@ -31,6 +32,8 @@ async def upsert_flight(flight_id: str, flight: FlightCreate):
         update_data = flight.dict(exclude_unset=True)
         updated_flight = stored_flight_model.copy(update=update_data)
     else:
+        if (not flight.arrival_time) or (not flight.departure_time):
+            raise HTTPException(status_code=409, detail=f"Could not create flight {flight_id}. New flights must be registered with both a departure time and an arrival time")
         updated_flight = Flight(
             id=flight_id,
             arrival_time=flight.arrival_time,

@@ -1,45 +1,6 @@
-import csv
-from datetime import datetime
-from contextlib import contextmanager
 from typing import List, Union
+from .csv_utils import DATA_FILE_DATE_FORMAT, CSV_FILE_HEADERS, MyCsvIO, csv_date_to_dateime
 from .schema import Flight
-
-#################################################################
-###                          CSV IO                           ###
-#################################################################
-
-DATA_FILE_NAME = 'flight.csv'
-DATA_FILE_DATE_FORMAT = "%H:%M"
-CSV_FILE_HEADERS = ["flight ID", "Arrival", "Departure","success"]
-
-class MyCsvIO(object):
-    def __init__(self):
-        self.file_name = DATA_FILE_NAME
-  
-    @contextmanager
-    def get_csv_reader(self):
-        try:
-            csvfile = open(self.file_name, 'r')
-            spamreader = csv.reader(csvfile, quotechar='|')
-            h = next(spamreader, None)
-            yield spamreader
-        finally:
-            csvfile.close()
-    
-    @contextmanager
-    def get_csv_writer(self):
-        try:
-            csvfile = open(self.file_name, 'w')
-            spamwriter = csv.DictWriter(csvfile, delimiter=',', fieldnames=CSV_FILE_HEADERS)
-            yield spamwriter
-        finally:
-            csvfile.close()
-
-
-#################################################################
-###                           CRUD                            ###
-#################################################################
-
 
 def flight_to_csv_row(flight: Flight):
     return [
@@ -48,10 +9,6 @@ def flight_to_csv_row(flight: Flight):
         flight.departure_time.strftime(DATA_FILE_DATE_FORMAT),
         flight.success
     ]
-    
-
-def csv_date_to_dateime(csv_date: str):
-    return datetime.strptime(csv_date.strip(), DATA_FILE_DATE_FORMAT)
 
 def csv_row_to_flight(csv_row: List):
     return Flight(
@@ -73,7 +30,6 @@ def get_all_flights() -> List[Flight]:
 
 def _get_flight(flight_id: str) -> Union[Flight, None]:
     return next(filter(lambda flight: flight.id == flight_id, get_all_flights()), None)
-
 
 def _upsert_flight(updated_flight: Flight):
     flights = get_all_flights()
