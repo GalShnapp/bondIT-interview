@@ -29,21 +29,29 @@ where you can play around with the API, and make request to the server.
 <br>
 Alternatively, you may use the following formats to send requests to the api:
 ##### upsert
+create a new flight:
 ```sh
 JohnDoe@Host:~/bondIT-interview $ curl -X 'PUT' \
-  'http://127.0.0.1:8000/flights/G773' \
+  'http://127.0.0.1:8000/flights/G59' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "id": "G773",
-  "arrival_time": "2022-08-05T04:25:07.712Z",
-  "departure_time": "2022-08-05T09:30:07.712Z"
+  "arrival_time": "2022-08-05T07:47:53.153Z",
+  "departure_time": "2022-08-05T10:57:53.153Z"
 }'
 ```
+update:
+curl -X 'PUT' \
+  'http://127.0.0.1:8000/flights/G59' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "departure_time": "2022-08-05T10:57:53.153Z"
+}'
 
 ##### get
 ```sh
 JohnDoe@Host:~/bondIT-interview $ curl -X 'GET' \
-  'http://127.0.0.1:8000/flights/G889' \
+  'http://127.0.0.1:8000/flights/G59' \
   -H 'accept: application/json'
 ```
