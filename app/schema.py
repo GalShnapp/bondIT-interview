@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
-from .csv_utils import DATA_FILE_DATE_FORMAT, csv_date_to_dateime
 
 
 class FlightBase(BaseModel):
