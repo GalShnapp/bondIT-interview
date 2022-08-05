@@ -41,13 +41,15 @@ JohnDoe@Host:~/bondIT-interview $ curl -X 'PUT' \
 }'
 ```
 update:
-curl -X 'PUT' \
+```sh
+JohnDoe@Host:~/bondIT-interview $ curl -X 'PUT' \
   'http://127.0.0.1:8000/flights/G59' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "departure_time": "2022-08-05T10:57:53.153Z"
+  "departure_time": "2022-08-05T12:57:53.153Z"
 }'
+```
 
 ##### get
 ```sh
