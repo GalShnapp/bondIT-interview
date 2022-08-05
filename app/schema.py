@@ -16,5 +16,5 @@ class FlightCreate(FlightBase):
 class Flight(FlightBase):
     arrival_time: datetime
     departure_time: datetime
-    id: str = "NoIDAvailable"
+    id: str
     success: bool = False
